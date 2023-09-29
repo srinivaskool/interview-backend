@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+var axios = require("axios");
 
 const app = express();
 const port = process.env.PORT || 3004;
@@ -8,16 +9,44 @@ const port = process.env.PORT || 3004;
 app.use(bodyParser.json());
 
 // Define a POST route
-app.post('/linkedin-login', (req, res) => {
+app.post('/linkedin-login', async (req, res) => {
     try {
-        // Access the JSON data from the request body
+
         const requestData = req.body;
+        const authorizationCode = requestData.code;
+        console.log('authorizationCode', authorizationCode);
 
-        // Process the data as needed
-        // For example, you can access requestData properties like requestData.propertyName
+        const clientId = '86agn2chxp9rtd';
+        const clientSecret = 'iUoRpiFNFrmDtqGC';
+        const redirectUri = 'http://localhost:3000/';
 
-        // Send a response
-        res.status(200).json({ message: 'Data received successfully', data: requestData });
+        let accessToken;
+
+        await axios
+            .post('https://www.linkedin.com/oauth/v2/accessToken', null, {
+                params: {
+                    grant_type: 'authorization_code',
+                    code: authorizationCode,
+                    redirect_uri: redirectUri,
+                    client_id: clientId,
+                    client_secret: clientSecret,
+                },
+            })
+            .then((response) => {
+                accessToken = response.data.access_token;
+                console.log('accessToken', accessToken);
+            })
+            .catch((error) => {
+                console.error('Error exchanging code for access token:', error);
+            });
+
+        const response = await axios.get('https://api.linkedin.com/v2/userinfo', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        console.log('User Profile:', response.data);
+        res.status(200).json({ message: 'Data received successfully', data: response.data });
     } catch (error) {
         // Handle errors
         console.error(error);
@@ -27,7 +56,7 @@ app.post('/linkedin-login', (req, res) => {
 
 app.get('/hi', (req, res) => {
     try {
-        res.status(200).json({ message: 'HI' });
+        res.status(200).json({ message: 'Hi bro, Srinivas here' });
     } catch (error) {
         // Handle errors
         console.error(error);
