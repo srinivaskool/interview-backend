@@ -1,12 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 var axios = require("axios");
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3004;
 
 // Middleware to parse JSON body
 app.use(bodyParser.json());
+
+// Enable CORS for all routes
+app.use(cors()); // Use cors middleware to enable CORS
 
 // Define a POST route
 app.post('/linkedin-login', async (req, res) => {
