@@ -54,7 +54,7 @@ app.post('/linkedin-login', async (req, res) => {
     } catch (error) {
         // Handle errors
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error });
     }
 });
 
@@ -64,7 +64,7 @@ app.get('/hi', (req, res) => {
     } catch (error) {
         // Handle errors
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: error });
     }
 });
 
