@@ -1,5 +1,4 @@
-require("dotenv").config();
-
+const dotenv = require('dotenv');
 const OpenAI = require('openai');
 const express = require('express');
 const axios = require('axios');
@@ -9,6 +8,9 @@ const https = require("https");
 
 const app = express();
 const port = 3004;
+
+
+dotenv.config();
 
 // Enable CORS for all routes
 app.use(cors()); // Use cors middleware to enable CORS
