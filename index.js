@@ -1,12 +1,15 @@
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 const port = 3004;
 
-app.use(bodyParser.json());
+// Enable CORS for all routes
+app.use(cors()); // Use cors middleware to enable CORS
 
+app.use(bodyParser.json());
 // Use bodyParser for parsing JSON
 app.use(express.json());
 
