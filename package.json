@@ -9,7 +9,7 @@
   "author": "srinivas",
   "license": "ISC",
   "engines": {
-    "node": ">=14.0.0" // Use a Node.js version that supports the 'node:fs' module
+    "node": ">=14.0.0"
   },
   "dependencies": {
     "axios": "^1.5.1",
