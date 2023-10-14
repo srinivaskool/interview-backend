@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "author": "",
+  "author": "srinivas",
   "license": "ISC",
+  "engines": {
+    "node": ">=14.0.0" // Use a Node.js version that supports the 'node:fs' module
+  },
   "dependencies": {
     "axios": "^1.5.1",
     "cors": "^2.8.5",
