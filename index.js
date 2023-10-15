@@ -1,4 +1,3 @@
-const dotenv = require('dotenv');
 const OpenAI = require('openai');
 const express = require('express');
 const axios = require('axios');
@@ -9,14 +8,10 @@ const https = require("https");
 const app = express();
 const port = 3004;
 
-
-dotenv.config();
-
-// Enable CORS for all routes
-app.use(cors()); // Use cors middleware to enable CORS
+app.use(cors()); 
 
 app.use(bodyParser.json());
-// Use bodyParser for parsing JSON
+
 app.use(express.json());
 
 app.get('/hi', (req, res) => {
@@ -98,6 +93,24 @@ app.post('/openai-chat', async (req, res) => {
     request.end();
 });
 
+app.post('/forward', async (req, res) => {
+  try {
+    const targetUrl = 'https://api.openai.com/v1/chat/completions'; // Replace with the URL you want to send the POST request to
+    const response = await axios.post(targetUrl, req.body);
+
+    // Forward the response back to the client
+    console.log('response', response)
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    // Handle errors appropriately
+    res.status(500).json({ error: error });
+  }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+
+
+
