@@ -96,14 +96,15 @@ app.post('/openai-chat', async (req, res) => {
 app.post('/forward', async (req, res) => {
   try {
     const targetUrl = 'https://api.openai.com/v1/chat/completions'; // Replace with the URL you want to send the POST request to
-    const response = await axios.post(targetUrl, {responseType: 'stream'}, req.body);
+    const {data} = await axios.post(targetUrl, {responseType: 'stream'}, req.body);
 
     // Forward the response back to the client
-    console.log('response', response)
-    res.status(response.status).json(response.data);
+    // console.log('response', response)
+    // res.status(response.status).json(response.data);
   } catch (error) {
     // Handle errors appropriately
     res.status(500).json({ error: error });
+    data.pipe(res);
   }
 });
 
