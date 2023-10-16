@@ -99,12 +99,12 @@ app.post('/forward', async (req, res) => {
     const {data} = await axios.post(targetUrl, {responseType: 'stream'}, req.body);
 
     // Forward the response back to the client
-    // console.log('response', response)
+    console.log('response', response);
+    data.pipe(res);
     // res.status(response.status).json(response.data);
   } catch (error) {
     // Handle errors appropriately
     res.status(500).json({ error: error });
-    data.pipe(res);
   }
 });
 
