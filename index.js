@@ -1,10 +1,10 @@
-const OpenAI = require('openai');
-const express = require('express');
-const axios = require('axios');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const https = require("https");
-const fetch = require('node-fetch');
+import OpenAI from 'openai';
+import express from 'express';
+import axios from 'axios';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import https from 'https';
+import fetch from 'node-fetch';
 
 const app = express();
 const port = 3004;
