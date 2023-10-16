@@ -51,7 +51,7 @@ app.post('/forward', async (req, res) => {
 
   } catch (error) {
     // Handle errors appropriately
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 
