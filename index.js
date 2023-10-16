@@ -31,7 +31,7 @@ app.post('/forward', async (req, res) => {
     const response = await fetch(targetUrl, {
       method: 'POST',
       body: JSON.stringify({
-            stream: true,
+            stream: req.body.stream,
             model: "gpt-3.5-turbo",
             max_tokens: 1000,
             temperature: 0.7,
