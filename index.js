@@ -30,14 +30,14 @@ app.post('/forward', async (req, res) => {
 
     const response = await fetch(targetUrl, {
       method: 'POST',
-      body: JSON.stringify(
+      body: JSON.stringify({
             stream: true,
             model: "gpt-3.5-turbo",
             max_tokens: 1000,
             temperature: 0.7,
             n: 1,
             messages: req.body.messages,
-            ),
+      }),
       headers: { 'Content-Type': 'application/json' , 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`},
     });
 
