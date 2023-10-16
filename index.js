@@ -4,6 +4,7 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const https = require("https");
+const fetch = require('node-fetch');
 
 const app = express();
 const port = 3004;
@@ -96,15 +97,24 @@ app.post('/openai-chat', async (req, res) => {
 app.post('/forward', async (req, res) => {
   try {
     const targetUrl = 'https://api.openai.com/v1/chat/completions'; // Replace with the URL you want to send the POST request to
-    const {data} = await axios.post(targetUrl, {responseType: 'stream'}, req.body);
 
-    // Forward the response back to the client
-    console.log('response', response);
-    data.pipe(res);
-    // res.status(response.status).json(response.data);
+    const response = await fetch(targetUrl, {
+      method: 'POST',
+      body: JSON.stringify(req.body),
+      headers: { 'Content-Type': 'application/json' , 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`},
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status: ${response.status}`);
+    }
+    console.log("sending data", response);
+
+    // Stream the response back to the client
+    response.body.pipe(res);
+
   } catch (error) {
     // Handle errors appropriately
-    res.status(500).json({ error: error });
+    res.status(500).json({ error: error.message });
   }
 });
 
