@@ -44,7 +44,7 @@ app.post('/forward', async (req, res) => {
     if (!response.ok) {
       throw new Error(`Request failed with status: ${response.status}`);
     }
-    console.log("sending data", response.body);
+    console.log("sending data", response);
 
     // Stream the response back to the client
     response.body.pipe(res);
@@ -58,7 +58,3 @@ app.post('/forward', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
-
-
-
