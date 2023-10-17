@@ -47,7 +47,7 @@ app.post('/forward', async (req, res) => {
     console.log("sending data", response.body);
 
     // Stream the response back to the client
-    response.body.choices.pipe(res);
+    response.body.pipe(res);
 
   } catch (error) {
     // Handle errors appropriately
